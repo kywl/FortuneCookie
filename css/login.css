@@ -1,0 +1,219 @@
+body {
+    font-family: monospace;
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    font-family: monospace;
+    position: relative;
+    z-index: 1;
+    /*border: solid red;*/
+    text-align: center;
+    width: 70%;
+    height: 70%;
+    margin: auto;
+}
+
+.banner {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*home button*/
+#home {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    width: 40px;
+    height: 30px;
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    z-index: 1;
+}
+
+p {
+    /*border: solid blue;*/
+    text-align: center;
+    color: DarkGrey;
+
+}
+
+form {
+    /*border: solid green;*/
+    width: 60%;
+}
+
+.user-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /*border: solid purple;*/
+}
+
+.user-box input {
+    width: 70%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: black;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    background: transparent;
+    font-family: monospace;
+}
+
+.user-box label {
+    position: absolute;
+    top: 0;
+    left: 80px;
+    padding: 10px 0;
+    font-size: 16px;
+    color: black;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.user-box input:focus~label,
+.user-box input:valid~label {
+    top: -20px;
+    left: 60px;
+    color: #bdb8b8;
+    font-size: 12px;
+}
+
+/* submit Button */
+.submit {
+    position: relative;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 4px;
+    transition: filter 250ms;
+    user-select: none;
+    touch-action: manipulation;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: hsl(0deg 0% 0% / 0.25);
+    will-change: transform;
+    transform: translateY(2px);
+    transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+.edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(to left,
+            hsl(340deg 100% 16%) 0%,
+            hsl(340deg 100% 32%) 8%,
+            hsl(340deg 100% 32%) 92%,
+            hsl(340deg 100% 16%) 100%);
+}
+
+.front {
+    display: block;
+    position: relative;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 15px;
+    color: white;
+    background: hsl(345deg 100% 47%);
+    will-change: transform;
+    transform: translateY(-4px);
+    transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+.submit:hover {
+    filter: brightness(110%);
+}
+
+.submit:hover .front {
+    transform: translateY(-6px);
+    transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.submit:active .front {
+    transform: translateY(-2px);
+    transition: transform 34ms;
+}
+
+.submit:hover .shadow {
+    transform: translateY(4px);
+    transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.submit:active .shadow {
+    transform: translateY(1px);
+    transition: transform 34ms;
+}
+
+.submit:focus:not(:focus-visible) {
+    outline: none;
+}
+
+
+/* login button */
+#register {
+  --color: hsl(345deg 100% 47%);
+  font-family: inherit;
+  display: inline-block;
+  width: 70px;
+  height: 30px;
+  line-height: 2.5em;
+  overflow: hidden;
+  font-size: 11px;
+  z-index: 1;
+  color: var(--color);
+  border: 2px solid var(--color);
+  border-radius: 6px;
+  position: relative;
+  margin-right: 20px;
+  background: transparent;
+  text-align: center;
+}
+
+#register::before {
+  position: absolute;
+  content: "";
+  background: var(--color);
+  width: 150px;
+  height: 200px;
+  z-index: -1;
+  border-radius: 50%;
+}
+
+#register:hover {
+  color: white;
+}
+
+#register:before {
+  top: 100%;
+  left: 100%;
+  transition: .3s all;
+}
+
+#register:hover::before {
+  top: -30px;
+  left: -30px;
+}

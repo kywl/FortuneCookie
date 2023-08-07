@@ -1,0 +1,232 @@
+body {
+    /*without this, user can drag to the right and see the navbar*/
+    overflow-x: hidden;
+    /*background-image: url("Untitled_Artwork.png");*/
+    /*background-size: 100%;*/
+}
+
+/* home button */
+#home {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    width: 40px;
+    height: 30px;
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* request output area */
+.main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    font-family: monospace;
+    /*border: solid red;*/
+    padding-top: 30px;
+    margin: auto;
+}
+
+.request {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 10px;
+    /*border: solid blue;*/
+}
+
+textarea {
+    margin-bottom: 30px;
+    margin-top: 40px;
+    font-size: 15px;
+    z-index: -1;
+}
+
+.border {
+    /*border: solid red;*/
+    position: relative;
+    width: 120%;
+    height: 200%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-image: url("border.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+/* request and rate buttons */
+.user-buttons {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    font-family: monospace;
+}
+
+#rateBtn .front {
+    /*position: absolute;*/
+    /* rate button is on the right */
+    /*right: 0;*/
+    /*justify-content: flex-end;*/
+    padding: 6px 10px;
+}
+
+#rateBtn .front {
+    font-size: 11px;
+}
+
+.button {
+    position: relative;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 4px;
+    transition: filter 250ms;
+    user-select: none;
+    touch-action: manipulation;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-family: monospace;
+}
+
+
+.shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: hsl(0deg 0% 0% / 0.25);
+    will-change: transform;
+    transform: translateY(2px);
+    transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+.edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(to left,
+            hsl(340deg 100% 16%) 0%,
+            hsl(340deg 100% 32%) 8%,
+            hsl(340deg 100% 32%) 92%,
+            hsl(340deg 100% 16%) 100%);
+}
+
+.front {
+    display: block;
+    position: relative;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    color: white;
+    background: hsl(345deg 100% 47%);
+    will-change: transform;
+    transform: translateY(-4px);
+    transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+.button:hover {
+    filter: brightness(110%);
+}
+
+.button:hover .front {
+    transform: translateY(-6px);
+    transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.button:active .front {
+    transform: translateY(-2px);
+    transition: transform 34ms;
+}
+
+.button:hover .shadow {
+    transform: translateY(4px);
+    transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.button:active .shadow {
+    transform: translateY(1px);
+    transition: transform 34ms;
+}
+
+.button:focus:not(:focus-visible) {
+    outline: none;
+}
+
+#response {
+    border: none;
+    text-align: center;
+    resize: none;
+}
+
+
+/* display label for count and avg rating*/
+.display-label {
+    /*border: solid green;*/
+    display: flex;
+    font-size: 15px;
+}
+
+.display-rating {
+    /*border: solid pink;*/
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* the number of the avg ratings */
+#rate-box {
+    /*border: solid red;*/
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding-left: 5px;
+}
+
+#count-box {
+    /*border: solid red;*/
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding-left: 5px;
+}
+
+
+/* display rating through stars */
+#ratingDisplay {
+    font-size: 40px;
+    /* Adjust the font size to change the size of the stars */
+    color: gold;
+    /* Change the color of the filled stars */
+    /*border: solid orange;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.star.empty-star {
+    color: #ccc;
+    /* Change the color of the empty stars*/
+}
+
+.star {
+    display: inline-block;
+    font-size: 40px;
+    /* Adjust the font size to control the size of the stars */
+}
+
+.yellow-star {
+    color: #FFD700;
+    /* Set the color of the yellow star */
+}
