@@ -100,7 +100,7 @@ Enabled self account recovery and self registration
 Enabled: Send email message, verify email address\
 Two Options
 1. Your account will need to be [pulled out of the Amazon SES sandbox](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html) 
-to send a verification code via Amazon SES to users.
+to send a verification code via Amazon SES to all users.
 2. [Pre Sign-up Trigger](https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-lambda-pre-sign-up.html#aws-lambda-triggers-pre-registration-example-2)
 Auto-confirm and auto-verify all users\
 <mark>This project uses option #2</mark>
