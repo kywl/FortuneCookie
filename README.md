@@ -20,6 +20,10 @@ capabilities along with severless capabilities
 - Amazon API Gateway
 - AWS Amplify
 
+### Services Used for Development
+- AWS CodeCommit
+- AWS Cloud9
+
 
 ### Amazon DynamoDb
 **Schema**\
