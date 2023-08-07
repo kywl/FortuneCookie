@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <!-- Include the AWS SDK and Cognito Identity JS library -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.933.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@5.1.0/dist/amazon-cognito-identity.min.js"></script>
+    <script src="js/config.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/cookie-bounce.css" />
+    <link rel="stylesheet" type="text/css" href="css/login.css" />
+</head>
+<body>
+    <!--for the fortune cookie bouncing-->
+    <div id="cookie-container">
+        <div id="fortune-cookie">️🥠</div>
+    </div>
+    <div id="cookie">
+        <div class="banner">
+            <button id='home' onclick="window.location.href='index.html';">🏚️</button>
+            <!--include a link to send user to log in if they have previously registered-->
+            <button id="register" onclick="window.location.href='register.html';">Register</button>
+        </div>
+
+        <div class="main">
+            <header>
+                <h1>Login</h1>
+            </header>
+            <p>New users please make an account first</p>
+            <!--Create form for user to input their info (email for username + password)-->
+            <!--on submit, the function handleSignIn will be called in the script to log in the user-->
+            <form id="signinForm" onsubmit="handleSignIn(event);">
+                <div class="user-box">
+                    <input type="email" id="emailInputSignin" required>
+                    <label>Email</label>
+                </div>
+                <div class="user-box">
+                    <input type="password" id="passwordInputSignin" required pattern=".*">
+                    <label>Password</label>
+                </div>
+                <button class="submit" type="submit">
+                    <span class="shadow"></span>
+                    <span class="edge"></span>
+                    <span class="front text">Login</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        /* global _config */
+        /* global AWS */
+        /* global AmazonCognitoIdentity */
+
+        // home icon on hover
+        document.getElementById('home').setAttribute("data-toggle", "tooltip");
+        document.getElementById('home').setAttribute("title", "Time to go back home");
+
+        AWS.config.region = _config.cognito.region;
+        var poolData = { // Cognito user pool data
+            UserPoolId: _config.cognito.userPoolId,
+            ClientId: _config.cognito.userPoolClientId
+        };
+        var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+        // sign in user
+        function handleSignIn(event) {
+            // prevent default submit behavior
+            event.preventDefault();
+            // get the email and password from the form, put in an authentication object, store object in variable
+            var email = document.getElementById('emailInputSignin').value;
+            var password = document.getElementById('passwordInputSignin').value;
+            var authenticationData = {
+                Username: email,
+                Password: password
+            };
+            var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+            // put the user's email + password in an object and pass to a cognito user object
+            var userData = {
+                Username: email,
+                Pool: userPool
+            };
+            var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+            // authenticate the user
+            cognitoUser.authenticateUser(authenticationDetails, {
+                onSuccess: function(result) {
+                    console.log('Authentication successful');
+                    // Redirect to the homepage but I need to do something to preserve the state
+                    window.location.href = 'index.html';
+                },
+                onFailure: function(err) {
+                    console.log('Authentication failed:', err);
+                    alert('Authentication failed. Please check your email and password.');
+                }
+            });
+        }
+    </script>
+    <script src="js/login-cognito.js"></script>
+    <script src="js/cookie-bounce.js"></script>
+</body>
+
+</html>

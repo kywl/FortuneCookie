@@ -1,0 +1,120 @@
+<!--Register page: user will input their email (username) and password-->
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registration</title>
+    <!-- Include the AWS SDK and Cognito Identity JS library -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.933.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@5.1.0/dist/amazon-cognito-identity.min.js"></script>
+    <script src="js/config.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/cookie-bounce.css" />
+    <link rel="stylesheet" type="text/css" href="css/register.css" />
+</head>
+
+<body>
+    <!--for the fortune cookie bouncing-->
+    <div id="cookie-container">
+        <div id="fortune-cookie">️🥠</div>
+    </div>
+    <!--container that the fortune cookie bounces around in-->
+    <div id="cookie">
+        <div class="banner">
+            <button id='home' onclick="window.location.href='index.html';">🏚️</button>
+            <!--include a link to send user to log in if they have previously registered-->
+            <button id="login" onclick="window.location.href='login.html';">Login</button>
+        </div>
+
+        <div class="main">
+            <header>
+                <h1>Welcome! Register Here</h1>
+            </header>
+            <!--Create form for user to input their info (email for username + password)-->
+            <!--on submit, the function registerUser will be called in the script to register the user-->
+            <form onsubmit="registerUser(); return false;">
+                <div class="user-box">
+                    <input type="email" id="email" required />
+                    <label>Email</label>
+                </div>
+
+                <p id="pw-info">
+                    <!--Will change based on cognito pool requirements-->
+                    Password must have at least 8 characters and at least 1 lowercase letter
+                </p>
+
+                <div class="user-box">
+                    <input type="password" id="password" required />
+                    <label>Password</label>
+                </div>
+                <button class="submit" type="submit">
+                    <span class="shadow"></span>
+                    <span class="edge"></span>
+                    <span class="front text">Register</span>
+                </button>
+            </form>
+
+        </div>
+    </div>
+    <script>
+        /* global _config */
+        /* global AWS */
+        /* global AmazonCognitoIdentity */
+
+        // home icon on hover
+        document.getElementById('home').setAttribute("data-toggle", "tooltip");
+        document.getElementById('home').setAttribute("title", "Time to go back home");
+
+        // register the user
+        const registerUser = () => {
+            // get the user's email to pass as an attribute, for additional information (for communication/identification)
+            // in addition to using the email as the user's username
+            var attributeList = [];
+            var dataEmail = {
+                Name: 'email',
+                Value: document.getElementById('email').value,
+            };
+            var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
+            attributeList.push(attributeEmail);
+
+            // configure parameters for creating the user
+            var params = {
+                ClientId: _config.cognito.userPoolClientId,
+                Username: document.getElementById('email').value,
+                Password: document.getElementById('password').value,
+                UserAttributes: attributeList, // email attribute is the only attribute
+            };
+            // Configure AWS region for AWS SDK
+            AWS.config.region = _config.cognito.region;
+            // Create a CognitoUserPool object
+            var poolData = { // Cognito user pool data
+                UserPoolId: _config.cognito.userPoolId,
+                ClientId: _config.cognito.userPoolClientId
+            };
+            var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+            // Register the user
+            userPool.signUp(params.Username, params.Password, params.UserAttributes, null, function(err, result) {
+                if (err) {
+                    console.log(err);
+                    // specific error cases
+                    if (err.code === 'UsernameExistsException') {
+                        alert('Username already exists \nIf you have previously registerd, please log in');
+                    }
+                    else if (err.code === 'InvalidPasswordException') {
+                        alert('Password did not conform with policy: Password must have lowercase characters, at least 8 characters');
+                    }
+                    return;
+                }
+                console.log('Registration successful');
+                // navigate to login page because the user is registered
+                window.location.href = 'login.html';
+            });
+        };
+    </script>
+    <script src="js/register-cognito.js"></script>
+    <script src="js/cookie-bounce.js"></script>
+</body>
+
+</html>

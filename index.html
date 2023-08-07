@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fortune Cookie Generator</title>
+    <!-- Include the AWS SDK and Cognito Identity JS library -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.933.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@5.1.0/dist/amazon-cognito-identity.min.js"></script>
+    <!--config file-->
+    <script src="js/config.js"></script>
+    <!--style files-->
+    <link rel="stylesheet" type="text/css" href="css/rating-modal.css" />
+    <link rel="stylesheet" type="text/css" href="css/menu.css" />
+    <link rel="stylesheet" type="text/css" href="css/home.css" />
+    <link rel="stylesheet" type="text/css" href="css/cookie-bounce.css" />
+</head>
+
+<body>
+    <!--for the fortune cookie bouncing-->
+    <div id="cookie-container">
+        <div id="fortune-cookie">️🥠</div>
+    </div>
+    <div id="cookie">
+        <!--For the vertical navbar with a hamburger open close button-->
+        <label for="burger" class="burger">
+            <input id="burger" type="checkbox">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <div class="navbar">
+            <h6 id="greeting">Not logged in</h6>
+            <ul id="navlinks">
+                <li><button class="menu-button" id="signupBtn" onclick="window.location.href='register.html';">Register</button></li>
+                <li><button class="menu-button" id="loginBtn" onclick="window.location.href='login.html';">Login</button></li>
+            </ul>
+        </div>
+        <!--home button-->
+        <button id='home' onclick="window.location.href='index.html';">🏚️</button>
+        <!--main functionaliy: display fortune, request fortune + rate buttons, display stats (avg rating and frequency)-->
+        <div class="main">
+            <header>
+                <h1>Fortune Cookie Generator</h1>
+            </header>
+
+            <!--Request div has the text output and request and rate buttons-->
+            <div class="request">
+                <!--for the decorative border-->
+                <div class="border">
+                    <textarea readonly id="response" rows="5" cols="50">Click Open 🥠</textarea>
+                </div>
+                <div class="user-buttons">
+                    <button class="button" id="requestButton">
+                        <span class="shadow"></span>
+                        <span class="edge"></span>
+                        <span class="front text">Open 🥠</span>
+                    </button>
+                </div>
+            </div>
+            <!--under the request area there are two text areas that output the average rating and current request count for the current fortune displayed-->
+            <div class="display-rating">
+                <div class="display-label">
+                    <p>Average Rating: </p>
+                    <div id="rate-box"></div>
+                </div>
+                <div id="ratingDisplay"></div>
+                <button class="button" id="rateBtn">
+                    <span class="shadow"></span>
+                    <span class="edge"></span>
+                    <span class="front text">Rate ⭐️</span>
+                </button>
+            </div>
+            <div class="display-count">
+                <div class="display-label">
+                    <p>Request Count: </p>
+                    <div id="count-box"></div>
+                </div>
+            </div>
+        </div>
+        <!--when user clicks rate button, a modal will popup with 5 star hover-click submit rating functionality-->
+        <!--shouldnt be visible until button pressed-->
+        <div id="popup-modal" class="modal">
+            <div class="modal-content">
+                <h2 id="rate-fortune">Rate the Fortune</h2>
+                <div class="rating">
+                    <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
+                    <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+                    <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
+                    <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
+                    <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+                </div>
+                <button class="button" id="submitRating">
+                    <span class="shadow"></span>
+                    <span class="edge"></span>
+                    <span class="front text">Submit</span>
+                </button>
+                <span class="close-button">&times;</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        // home icon on hover will say its times to go back home
+        document.getElementById('home').setAttribute("data-toggle", "tooltip");
+        document.getElementById('home').setAttribute("title", "Time to go back home");
+
+        // rate button is disabled until login
+        document.getElementById('rateBtn').onclick = (event) => { alert('Log in to give a rating'); };
+
+        // Function to handle the toggling of the navbar
+        function handleNavbarToggle() {
+            const burgerCheckbox = document.getElementById('burger');
+            const navbar = document.querySelector('.navbar');
+            // Toggle the navbar visibility based on the checkbox state
+            // When checked it hamburger looks like an X
+            if (burgerCheckbox.checked) {
+                navbar.style.transform = 'translateX(0)';
+            }
+            else {
+                navbar.style.transform = 'translateX(100%)';
+            }
+        }
+        // Attach the handleNavbarToggle function to the checkbox change event
+        document.getElementById('burger').addEventListener('change', handleNavbarToggle);
+        // Call the handleNavbarToggle function initially to set the initial state on page load
+        handleNavbarToggle();
+    </script>
+    <!--this script handles the state management and api calls-->
+    <script src="js/home.js"></script>
+    <script src="js/cookie-bounce.js"></script>
+</body>
+
+</html>

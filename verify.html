@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--currently not in use-->
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Verification</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.933.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@5.1.0/dist/amazon-cognito-identity.min.js"></script>
+</head>
+<body>
+    <h1>Verify️</h1>
+    <form id="verifyForm" onsubmit="handleVerify(event);">
+        <input type="email" id="emailInputVerify" placeholder="Email" required>
+        <input type="text" id="codeInputVerify" placeholder="Verification Code" required pattern=".*">
+        <input type="submit" value="Verify">
+    </form>
+    <a href="login.html">login here!</a>
+    <script>
+    AWS.config.region = 'us-east-1'; 
+    var poolData = {
+        UserPoolId: 'us-east-1_ir1iSXh47',
+        ClientId: '64rcojh0colepupb59e889jl83',
+    };
+    var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+    function handleVerify(event) {
+        event.preventDefault();
+        var email = $('#emailInputVerify').val();
+        var code = $('#codeInputVerify').val();
+        var userData = {
+            Username: email,
+            Pool: userPool
+        };
+        var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+        cognitoUser.confirmRegistration(code, true, function(err, result) {
+            console.log("verifying");
+            if (err) {
+                console.log("error");
+                console.log(err);
+                if (err.code === 'ExpiredCodeException') {
+                    alert(err.message + '\nIf you have previously verified, please log in')
+                }
+                else {
+                    alert(err.message);
+                }
+                return;
+            }
+            console.log('Verification successful');
+            alert('Verification successful. You will now be redirected to the login page.');
+            window.location.href = 'login.html';
+        });
+    }
+    </script>
+</body>
+</html>
