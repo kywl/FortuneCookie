@@ -12,6 +12,8 @@ be able to interact with a fortune application that provides them with fortunes
 and then allows them to rate them.  The platform will highlight AWS data 
 capabilities along with severless capabilities
 
+**Architecture Diagram**
+![fortunecookiearchitecture](https://github.com/kywl/FortuneCookie/assets/76237707/4e909190-3ccc-4ce8-8f01-56e78b41141e)
 
 ## Services Used
 - Amazon DynamoDb
@@ -210,4 +212,3 @@ Clone the repository and connect to Amplify to host the web app
 ### Resources
 - [Build a Serverless Web Application](https://aws.amazon.com/getting-started/hands-on/build-serverless-web-app-lambda-apigateway-s3-dynamodb-cognito/)
 - [Developing a Serverless Web Application with Session & User Management on AWS](https://medium.com/swlh/developing-a-serverless-web-application-with-session-user-management-on-aws-f2d124baf0d8)
-![fortunecookiearchitecture](https://github.com/kywl/FortuneCookie/assets/76237707/4e909190-3ccc-4ce8-8f01-56e78b41141e)
