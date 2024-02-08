@@ -2,7 +2,7 @@
 
 This is the code for my 2023 Solutions Architect internship at AWS. An AWS-hosted, full stack, serverless web application with user and session management.
 
-The virtual fortune cookie experience – producing fortunes without the cookie
+The virtual fortune cookie experience – producing fortunes without the cookie  
 Access it [here](https://master.d1b1ekmsa60rg9.amplifyapp.com/)
 
 **Project Description**\
